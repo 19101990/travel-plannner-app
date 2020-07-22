@@ -56,7 +56,12 @@ app.post('/geonames-api', function addGeoData(req, res) {
         country: req.body.url.country
     }
     trips.push(GNData);
-    console.log(GNData)
+    console.log('gndata ', GNData.lat)
+    // console.log(GNData.lat)
+    console.log(trips)
+    // console.log(trips[0])
+    // console.log(trips[0].lat)
+    // console.log(GNData.country)
     res.send(trips);
 });
 
