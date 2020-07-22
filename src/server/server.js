@@ -51,9 +51,9 @@ app.listen(port, function () {
 // CREATE ENDPOINT FOR GEONAMES
 app.post('/geonames-api', function addGeoData(req, res) {
     GNData = {
-        lat: req.body.latitude,
-        long: req.body.longitude,
-        country: req.body.country
+        lat: req.body.url.latitude,
+        long: req.body.url.longitude,
+        country: req.body.url.country
     }
     trips.push(GNData);
     console.log(GNData)
