@@ -1,3 +1,5 @@
+import fetch from "node-fetch"
+
 export function handleSubmit(event) {
     event.preventDefault()
     // get the destination from user
@@ -8,18 +10,17 @@ export function handleSubmit(event) {
                 return await postData('http://localhost:8000/geonames-api', {
                     latitude: geoArray[0],
                     longitude: geoArray[1],
-                    country: geoArray[2]
+                    country: geoArray[2],
+                    name: geoArray[3]
                 })
             })
-            // .then(function (res){
-            //     const lat = res[0].latitude
-            //     const long = res[0].longitude
-            //     return {lat, long}
-            // })
+            .then(async function (){
+                await fetch('http://localhost:8000/weatherbit-api')
+            })
     } else {
         alert('Enter valid city')
     }
-}  
+} 
 
 
 const postData = async (url='', data={}) => {

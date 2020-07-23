@@ -2,6 +2,9 @@ var path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+// ENABLE FETCH ON THE SERVER SIDE
+const fetch = require('node-fetch')
+const weather_key = 'e4058fb963b541aca91727bfda55c7d9'
 
 // START EXPRESS APP
 const app = express()
@@ -10,7 +13,7 @@ const app = express()
 const port = 8000;
 
 // STORE TRIPS ENTERED BY THE USER
-let trips = []
+let projectData = []
 
 // ALLOW CROSS-ORIGIN RESOURCE SHARING
 app.use(cors())
@@ -50,19 +53,31 @@ app.listen(port, function () {
 
 // CREATE ENDPOINT FOR GEONAMES
 app.post('/geonames-api', function addGeoData(req, res) {
-    GNData = {
+    tripData = {
         lat: req.body.url.latitude,
         long: req.body.url.longitude,
-        country: req.body.url.country
+        country: req.body.url.country,
+        name: req.body.url.name,
+        temp: '',
+        description: ''
     }
-    trips.push(GNData);
-    console.log('gndata ', GNData.lat)
-    // console.log(GNData.lat)
-    console.log(trips)
-    // console.log(trips[0])
-    // console.log(trips[0].lat)
-    // console.log(GNData.country)
-    res.send(trips);
+    projectData.push(tripData);
+    console.log('allData ', tripData.lat)
+    console.log(projectData)
+    res.send(projectData);
 });
+
+app.get('/weatherbit-api', async (req, res) => {
+    const lattitude = projectData[0].lat
+    const longitude = projectData[0].long
+    const api_url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${weather_key}&lat=${lattitude}&lon=${longitude}&days=1`
+    const response = await fetch(api_url)
+    const json = await response.json()
+    res.json(json)
+    console.log(json)
+    projectData[0].temp = json.data[0].high_temp
+    projectData[0].description = json.data[0].weather.description
+    console.log(projectData[0])
+} )
 
 
