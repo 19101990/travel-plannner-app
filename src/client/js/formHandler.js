@@ -17,6 +17,9 @@ export function handleSubmit(event) {
             .then(async function (){
                 await fetch('http://localhost:8000/weatherbit-api')
             })
+            .then(async function (){
+                await fetch('http://localhost:8000/pixabay-api')
+            })
     } else {
         alert('Enter valid city')
     }

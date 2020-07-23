@@ -5,6 +5,7 @@ const cors = require('cors')
 // ENABLE FETCH ON THE SERVER SIDE
 const fetch = require('node-fetch')
 const weather_key = 'e4058fb963b541aca91727bfda55c7d9'
+const pixabay_key = '1721700-cd926526c6558979386283230'
 
 // START EXPRESS APP
 const app = express()
@@ -59,7 +60,8 @@ app.post('/geonames-api', function addGeoData(req, res) {
         country: req.body.url.country,
         name: req.body.url.name,
         temp: '',
-        description: ''
+        description: '',
+        img: ''
     }
     projectData.push(tripData);
     console.log('allData ', tripData.lat)
@@ -68,16 +70,23 @@ app.post('/geonames-api', function addGeoData(req, res) {
 });
 
 app.get('/weatherbit-api', async (req, res) => {
-    const lattitude = projectData[0].lat
-    const longitude = projectData[0].long
+    const lattitude = projectData[projectData.length-1].lat
+    const longitude = projectData[projectData.length-1].long
     const api_url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${weather_key}&lat=${lattitude}&lon=${longitude}&days=1`
     const response = await fetch(api_url)
     const json = await response.json()
     res.json(json)
-    console.log(json)
-    projectData[0].temp = json.data[0].high_temp
-    projectData[0].description = json.data[0].weather.description
-    console.log(projectData[0])
+    projectData[projectData.length-1].temp = json.data[0].high_temp
+    projectData[projectData.length-1].description = json.data[0].weather.description
+    console.log(projectData[projectData.length-1])
 } )
 
-
+app.get('/pixabay-api', async (req, res) => {
+    const name = projectData[projectData.length-1].name
+    const api_url = `https://pixabay.com/api/?key=${pixabay_key}&q=${name}&image_type=photo`
+    const response = await fetch(api_url)
+    const json = await response.json()
+    res.json(json)
+    projectData[projectData.length-1].img = json.hits[0].webformatURL
+    console.log(projectData[projectData.length-1])
+} )
