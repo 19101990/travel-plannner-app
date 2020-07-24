@@ -7,9 +7,10 @@
     </head>
     <body>       
         <section>
-            <form id="form" class="" onsubmit="return Client.handleSubmit(event)">
+            <form id="form" class="" onsubmit="return Client.handleSubmit(event)" method="POST" action="/submit-form">
                 <input id="input-city" type="text" name="input" value="" placeholder="enter your destination...">
-                <input id="input-date" type="text" name="input" value="" placeholder="enter your departure date...">
+                <input id="input-start-date" type="text" name="inputStart" value="" placeholder="yyyy-MM-dd">
+                <!-- <input id="input-end-date" type="text" name="inputEnd" value="" placeholder="yyyy-MM-dd"> -->
                 <input type="submit" name="" value="Show results" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
             </form>
         <section>

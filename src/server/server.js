@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 // ENABLE FETCH ON THE SERVER SIDE
 const fetch = require('node-fetch')
+const { start } = require('repl')
 const weather_key = 'e4058fb963b541aca91727bfda55c7d9'
 const pixabay_key = '1721700-cd926526c6558979386283230'
 
@@ -59,15 +60,18 @@ app.post('/geonames-api', function addGeoData(req, res) {
         long: req.body.url.longitude,
         country: req.body.url.country,
         name: req.body.url.name,
+        days: '',
+        date: '',
         temp: '',
         description: '',
         img: ''
     }
     projectData.push(tripData);
-    console.log('allData ', tripData.lat)
-    console.log(projectData)
+    // console.log('allData ', tripData.lat)
+    // console.log(projectData)
     res.send(projectData);
-});
+})
+
 
 app.get('/weatherbit-api', async (req, res) => {
     const lattitude = projectData[projectData.length-1].lat
@@ -76,10 +80,15 @@ app.get('/weatherbit-api', async (req, res) => {
     const response = await fetch(api_url)
     const json = await response.json()
     res.json(json)
+
+    // const today = new Date()
+    // const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+    // // console.log(date)
+
     projectData[projectData.length-1].temp = json.data[0].high_temp
     projectData[projectData.length-1].description = json.data[0].weather.description
-    console.log(projectData[projectData.length-1])
-} )
+    // console.log(projectData[projectData.length-1])
+})
 
 app.get('/pixabay-api', async (req, res) => {
     const name = projectData[projectData.length-1].name
@@ -88,5 +97,26 @@ app.get('/pixabay-api', async (req, res) => {
     const json = await response.json()
     res.json(json)
     projectData[projectData.length-1].img = json.hits[0].webformatURL
-    console.log(projectData[projectData.length-1])
-} )
+    // console.log(projectData[projectData.length-1])
+})
+
+  app.post('/days-left', (req, res) => {
+    // const timmme = req.body.url
+    projectData[projectData.length-1].days = req.body.url
+    const daysToAdd = req.body.url
+    function addDays(date, days) {
+        const copy = new Date(Number(date))
+        copy.setDate(date.getDate() + days)
+        return copy
+      }
+      const date = new Date()
+      const dt = addDays(date, daysToAdd)
+      const departureDate = dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate()
+      projectData[projectData.length-1].date = departureDate
+      console.log(projectData[projectData.length-1])
+  });
+
+//   app.post('/departure-date', (req, res) => {
+//     projectData[projectData.length-1].date = req.body.url
+//     // console.log(projectData[projectData.length-1])
+//   });
