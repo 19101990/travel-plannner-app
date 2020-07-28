@@ -6,7 +6,6 @@ export function handleSubmit(event) {
     let city = document.getElementById('input-city').value
     const startingDate = document.getElementById('input-start-date').value
     // console.log(startingDate)
-    const theDate = new Date(startingDate)
     const timeDeparture = (new Date(startingDate).getTime()) / 1000;
     const timeNow = (new Date().getTime())/1000
     // console.log(timeDeparture)
