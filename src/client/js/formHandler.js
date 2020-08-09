@@ -4,14 +4,23 @@ export function handleSubmit(event) {
     event.preventDefault()
     // get the destination from user
     let city = document.getElementById('input-city').value
-    const startingDate = document.getElementById('input-start-date').value
-    // console.log(startingDate)
-    const timeDeparture = (new Date(startingDate).getTime()) / 1000;
-    const timeNow = (new Date().getTime())/1000
-    // console.log(timeDeparture)
-    // console.log(timeNow)
-    const daysLeft = Math.round((timeDeparture - timeNow) / 86400);
+    // Gets the input date
+    // .toIDOString() converts the date to ISO format
+    // .split() gets the year, month and day of the date
+    const startingDate = new Date(document.getElementById('input-start-date').value)
+    // .toISOString()
+    // .split("T")[0]
+    const todaysDate = new Date()
+    // .toISOString()
+    // .slice(0, 10)
+    const daysLeft = Math.ceil((startingDate - todaysDate)/86400000)
+    console.log(startingDate)
+    console.log(todaysDate)
     console.log(daysLeft)
+    // const timeDeparture = (new Date(startingDate).getTime()) / 1000;
+    // const timeNow = (new Date().getTime())/1000
+    // const daysLeft = Math.round((timeDeparture - timeNow) / 86400);
+    // console.log(daysLeft)
     if (city != 0) {
         Client.getGNData(city)
             .then(async function (geoArray){
@@ -46,11 +55,4 @@ const postData = async (url='', data={}) => {
         },
         body: JSON.stringify({url: data})
     })
-    // try {
-    //     const newData = await response.json()
-    //     console.log("Console.log newData from postData", newData)
-    //     return newData
-    // } catch (error) {
-    //     console.log(error)
-    // }
 }

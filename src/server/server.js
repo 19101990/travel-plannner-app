@@ -62,9 +62,11 @@ app.post('/geonames-api', function addGeoData(req, res) {
         name: req.body.url.name,
         days: '',
         date: '',
+        trip_date: '',
         current_temp: '',
         trip_temp: '',
-        description: '',
+        current_description: '',
+        trip_description: '',
         img: ''
     }
     projectData.push(tripData);
@@ -82,10 +84,10 @@ app.get('/weatherbit-api', async (req, res) => {
     const api_url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${weather_key}&lat=${lattitude}&lon=${longitude}&days=1`
     const response = await fetch(api_url)
     const json = await response.json()
-    res.json(json)
+    res.json(json)     
 
     projectData[projectData.length-1].current_temp = json.data[0].high_temp
-    projectData[projectData.length-1].description = json.data[0].weather.description
+    projectData[projectData.length-1].current_description = json.data[0].weather.description
 })
 
 app.get('/pixabay-api', async (req, res) => {
@@ -97,17 +99,34 @@ app.get('/pixabay-api', async (req, res) => {
     projectData[projectData.length-1].img = json.hits[0].webformatURL
 })
 
-  app.post('/days-left', (req, res) => {
-    projectData[projectData.length-1].days = req.body.url
-    const daysToAdd = req.body.url
-    function addDays(date, days) {
-        const ndt = new Date(Number(date))
-        ndt.setDate(date.getDate() + days)
-        return ndt
-      }
-      const date = new Date()
-      const dt = addDays(date, daysToAdd)
-      const departureDate = dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate()
-      projectData[projectData.length-1].date = departureDate
-      console.log(projectData[projectData.length-1])
-  })
+app.post('/days-left', (req, res) => {
+projectData[projectData.length-1].days = req.body.url
+const daysToAdd = req.body.url
+function addDays(date, days) {
+    const ndt = new Date(Number(date))
+    ndt.setDate(date.getDate() + days)
+    return ndt
+    }
+    const date = new Date()
+    const dt = addDays(date, daysToAdd)
+    const departureDate = dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate()
+    projectData[projectData.length-1].date = departureDate
+
+    // const today = new Date(projectData[projectData.length-1].date).getTime()
+    const daysTill = new Date(projectData[projectData.length-1].days)
+    const tripDate = function addDays(daysTill) {
+        return new Date(Date.now() + 864e5 * daysTill);
+    }
+    projectData[projectData.length-1].trip_date = tripDate(daysTill)
+    console.log(projectData[projectData.length-1])
+})
+
+app.post('/get-it-all', (req, res) => {
+    // const today = new Date(projectData[projectData.length-1].date).getTime()
+    const daysTill = new Date(projectData[projectData.length-1].days)
+    const tripDate = function addDays(daysTill) {
+        return new Date(Date.now() + 864e5 * daysTill);
+    }
+    projectData[projectData.length-1].trip_date = tripDate(daysTill)
+    console.log(projectData[projectData.length-1])
+})
