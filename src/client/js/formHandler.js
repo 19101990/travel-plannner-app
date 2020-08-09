@@ -4,16 +4,13 @@ export function handleSubmit(event) {
     event.preventDefault()
     // get the destination from user
     let city = document.getElementById('input-city').value
-    // Gets the input date
+    let startingDate = new Date(document.getElementById('input-start-date').value)
+    let todaysDate = new Date()
+    const daysLeft = Math.ceil((startingDate - todaysDate)/86400000)
     // .toIDOString() converts the date to ISO format
     // .split() gets the year, month and day of the date
-    const startingDate = new Date(document.getElementById('input-start-date').value)
-    // .toISOString()
-    // .split("T")[0]
-    const todaysDate = new Date()
-    // .toISOString()
-    // .slice(0, 10)
-    const daysLeft = Math.ceil((startingDate - todaysDate)/86400000)
+    startingDate = startingDate.toISOString().split('T')[0]
+    todaysDate = todaysDate.toISOString().split('T')[0]
     console.log(startingDate)
     console.log(todaysDate)
     console.log(daysLeft)
@@ -38,7 +35,11 @@ export function handleSubmit(event) {
                 await fetch('http://localhost:8000/pixabay-api')
             })
             .then(async function (){
-                await postData('http://localhost:8000/days-left', daysLeft)
+                const api_url = `dates/${startingDate},${todaysDate},${daysLeft}`
+                const response = await fetch(api_url)
+                const json = await response.json()
+                console.log(json)
+                // await postData('http://localhost:8000/datest', daysLeft, startingDate, todaysDate)
             })
     } else {
         alert('Enter valid data')
