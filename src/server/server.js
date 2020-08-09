@@ -70,8 +70,6 @@ app.post('/geonames-api', function addGeoData(req, res) {
         img: ''
     }
     projectData.push(tripData);
-    // console.log('allData ', tripData.lat)
-    // console.log(projectData)
     res.send(projectData);
 })
 
@@ -80,13 +78,22 @@ app.get('/weatherbit-api', async (req, res) => {
     const lattitude = projectData[projectData.length-1].lat
     const longitude = projectData[projectData.length-1].long
     const day = projectData[projectData.length-1].days
-    const api_url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${weather_key}&lat=${lattitude}&lon=${longitude}&days=1`
-    const response = await fetch(api_url)
-    const json = await response.json()
-    res.json(json)     
 
-    projectData[projectData.length-1].current_temp = json.data[0].high_temp
-    projectData[projectData.length-1].current_description = json.data[0].weather.description
+    if (projectData[projectData.length-1].days === '') {
+        const api_url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${weather_key}&lat=${lattitude}&lon=${longitude}&days=1`
+        const response = await fetch(api_url)
+        const json = await response.json()
+        res.json(json)
+        projectData[projectData.length-1].current_temp = json.data[0].high_temp
+        projectData[projectData.length-1].current_description = json.data[0].weather.description
+    } else {
+        const api_url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${weather_key}&lat=${lattitude}&lon=${longitude}&days=${day}`
+        const response = await fetch(api_url)
+        const json = await response.json()
+        res.json(json)
+        projectData[projectData.length-1].trip_temp = json.data[0].high_temp
+        projectData[projectData.length-1].trip_description = json.data[0].weather.description
+    } 
 })
 
 app.get('/pixabay-api', async (req, res) => {
@@ -98,10 +105,16 @@ app.get('/pixabay-api', async (req, res) => {
     projectData[projectData.length-1].img = json.hits[0].webformatURL
 })
 
-app.get('/dates/:dates', async (req, res) => {
+app.get('/data/:dates', async (req, res) => {
     const dates = req.params.dates.split(',')
     const startDate = dates[0]
     const todaysDate = dates[1]
     const daysLeft = dates[2]
     console.log(dates, startDate, todaysDate, daysLeft)
+    projectData[projectData.length-1].days = daysLeft
+    projectData[projectData.length-1].date = todaysDate
+    projectData[projectData.length-1].trip_date = startDate
+    const tripWeather = await fetch('http://localhost:8000/weatherbit-api')
+    console.log(projectData)
+    res.send(projectData)
 })

@@ -35,11 +35,10 @@ export function handleSubmit(event) {
                 await fetch('http://localhost:8000/pixabay-api')
             })
             .then(async function (){
-                const api_url = `dates/${startingDate},${todaysDate},${daysLeft}`
+                const api_url = `data/${startingDate},${todaysDate},${daysLeft}`
                 const response = await fetch(api_url)
                 const json = await response.json()
                 console.log(json)
-                // await postData('http://localhost:8000/datest', daysLeft, startingDate, todaysDate)
             })
     } else {
         alert('Enter valid data')
