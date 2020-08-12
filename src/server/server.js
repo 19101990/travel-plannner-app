@@ -84,15 +84,18 @@ app.get('/weatherbit-api', async (req, res) => {
         const response = await fetch(api_url)
         const json = await response.json()
         res.json(json)
+        console.log(projectData[projectData.length-1].days)
         projectData[projectData.length-1].current_temp = json.data[0].high_temp
         projectData[projectData.length-1].current_description = json.data[0].weather.description
     } else {
+        // const api_url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${weather_key}&lat=${lattitude}&lon=${longitude}&days=5`
         const api_url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${weather_key}&lat=${lattitude}&lon=${longitude}&days=${day}`
         const response = await fetch(api_url)
         const json = await response.json()
         res.json(json)
-        projectData[projectData.length-1].trip_temp = json.data[0].high_temp
-        projectData[projectData.length-1].trip_description = json.data[0].weather.description
+        console.log("blablabla", projectData[projectData.length-1].days)
+        projectData[projectData.length-1].trip_temp = json.data[day-1].high_temp
+        projectData[projectData.length-1].trip_description = json.data[day-1].weather.description
     } 
 })
 
