@@ -2,22 +2,18 @@ import fetch from "node-fetch"
 
 export function handleSubmit(event) {
     event.preventDefault()
-    // get the destination from user
+    // get input from the user
     let city = document.getElementById('input-city').value
     let startingDate = new Date(document.getElementById('input-start-date').value)
     let todaysDate = new Date()
     const daysLeft = Math.ceil((startingDate - todaysDate)/86400000)
-    // .toIDOString() converts the date to ISO format
-    // .split() gets the year, month and day of the date
     startingDate = startingDate.toISOString().split('T')[0]
     todaysDate = todaysDate.toISOString().split('T')[0]
+    // create a variable to hold trips' data
+    let tripData
     console.log(startingDate)
     console.log(todaysDate)
     console.log(daysLeft)
-    // const timeDeparture = (new Date(startingDate).getTime()) / 1000;
-    // const timeNow = (new Date().getTime())/1000
-    // const daysLeft = Math.round((timeDeparture - timeNow) / 86400);
-    // console.log(daysLeft)
     if (city != 0) {
         Client.getGNData(city)
             .then(async function (geoArray){
@@ -37,8 +33,25 @@ export function handleSubmit(event) {
             .then(async function (){
                 const api_url = `data/${startingDate},${todaysDate},${daysLeft}`
                 const response = await fetch(api_url)
-                const json = await response.json()
-                console.log(json)
+                tripData = await response.json()
+                console.log(tripData)
+            })
+            .then(async function (){
+                // update interface
+                console.log("this is the other function: ", tripData)
+                const container = document.getElementById('trips')
+                container.insertAdjacentHTML('afterbegin', 
+                `<div class="trip">
+                    <div class="country">${tripData[tripData.length-1].country}</div>
+                    <div class="name">${tripData[tripData.length-1].name}</div>
+                    <div class="latlong">${tripData[tripData.length-1].lat}, ${tripData[tripData.length-1].long}</div>
+                    <div class="image"><img src=${tripData[tripData.length-1].img}></div>
+                    <div class="days">Days left: ${tripData[tripData.length-1].days}</div>
+                    <div class="trip-date">Departure: ${tripData[tripData.length-1].trip_date}</div>
+                    <div class="trip-temp">${tripData[tripData.length-1].trip_temp}</div>
+                    <div class="trip-description">${tripData[tripData.length-1].trip_description}</div>
+                </div>`)
+                
             })
     } else {
         alert('Enter valid data')
