@@ -161,6 +161,7 @@ form#form {
 #submit {
     border: none;
     background: rgb(78, 199, 255);
+    font-family: 'Share', cursive;
     color: #fff;
     padding: 1em 1.5em;
     margin: .5em
@@ -219,18 +220,36 @@ footer {
         width: 90%;
     }
     
-    input[type="submit"] {
+    #submit {
         border: none;
         background: rgb(78, 199, 255);
         color: #fff;
         padding: 1em 1.5em;
-        margin: .5em
+        margin: .5em auto;
+        width: 95%;
+    }
+
+    .title {
+        font-size: 3em;
     }
   }
 
 @media screen and (max-width: 650px) {
     .trip {
         width: 100%;
+    }
+    .country, .latlong, .days, .trip-date, .trip-temp, .trip-description, .flag {
+        font-size: 1.3em;
+    }
+    .name {
+        font-size: 4em;
+    }
+    #input-city, #input-start-date, #submit {
+        font-size: 1.1em;
+        padding: .65em;
+    }
+    #submit {
+        min-width: 50%;
     }
 
 }

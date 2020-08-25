@@ -1,3 +1,5 @@
+const dotenv = require('dotenv')
+dotenv.config()
 var path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -5,8 +7,8 @@ const cors = require('cors')
 // ENABLE FETCH ON THE SERVER SIDE
 const fetch = require('node-fetch')
 const { start } = require('repl')
-const weather_key = 'e4058fb963b541aca91727bfda55c7d9'
-const pixabay_key = '1721700-cd926526c6558979386283230'
+const weather_key = process.env.weather_key
+const pixabay_key = process.env.pixabay_key
 
 // START EXPRESS APP
 const app = express()
