@@ -41,16 +41,17 @@ export function handleSubmit(event) {
                 console.log("this is the other function: ", tripData)
                 const container = document.getElementById('trips')
                 container.insertAdjacentHTML('afterbegin', 
-                `<div class="trip">
-                    <div class="country">${tripData[tripData.length-1].country}</div>
+                `<div class="trip overlay" style="background-image: url('${tripData[tripData.length-1].img_large}');background-repeat:no-repeat;background-attachment:center;background-position:center;background-size:cover;">
+                    <div class="trip-wrap"><div class="country">${tripData[tripData.length-1].country}</div>
                     <div class="name">${tripData[tripData.length-1].name}</div>
                     <div class="latlong">${tripData[tripData.length-1].lat}, ${tripData[tripData.length-1].long}</div>
-                    <div class="image"><img src=${tripData[tripData.length-1].img}></div>
+                   
                     <div class="days">Days left: ${tripData[tripData.length-1].days}</div>
                     <div class="trip-date">Departure: ${tripData[tripData.length-1].trip_date}</div>
-                    <div class="trip-temp">${tripData[tripData.length-1].trip_temp}</div>
+                    <div class="trip-temp">${tripData[tripData.length-1].trip_temp}&deg;C</div>
                     <div class="trip-description">${tripData[tripData.length-1].trip_description}</div>
-                </div>`)
+                </div></div>`)
+                //  <div class="image"><img src=${tripData[tripData.length-1].img}></div>
                 
             })
     } else {

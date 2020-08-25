@@ -3,18 +3,44 @@
     <head>
         <meta charset="utf-8">
         <title>Plan your next journey!</title>
-        <link href="https://fonts.googleapis.com/css2?family=Abel&family=Bebas+Neue&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Gruppo&display=swap" rel="stylesheet">
     </head>
     <body>       
-        <section>
+        <section id="user-input">
             <form id="form" class="" onsubmit="return Client.handleSubmit(event)" method="POST" action="/submit-form">
-                <input id="input-city" type="text" name="input" value="" placeholder="enter your destination...">
-                <input id="input-start-date" type="text" name="inputStart" value="" placeholder="yyyy-MM-dd">
-                <!-- <input id="input-end-date" type="text" name="inputEnd" value="" placeholder="yyyy-MM-dd"> -->
+                <input id="input-city" type="text" name="input" value="" placeholder="Enter your destination...">
+                <input id="input-start-date" type="text" name="inputStart" value="" placeholder="YYYY-MM-DD">
+                <!-- <input id="input-end-date" type="text" name="inputEnd" value="" placeholder="YYYY-MM-DD"> -->
                 <input type="submit" name="" value="Show results" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
             </form>
         <section id="trips">
-            
+            <div class="trip overlay" style="background-image: url('https://pixabay.com/get/54e0d44a495bb10ff3d8992cc62f357f123fdef852547841762f79d69f49_640.jpg');background-repeat:no-repeat;background-attachment:center;background-position:center;background-size:cover;"><div class="trip-wrap">
+                <div class="country">Germany</div>
+                <div class="name">Berlin</div>
+                <div class="latlong">52.52437, 13.41053</div>
+                <div class="days">Days left: 8</div>
+                <div class="trip-date">Departure: 2020-09-01</div>
+                <div class="trip-temp">Temperature: 18&deg;C</div>
+                <div class="trip-description">Weather: Overcast clouds</div>
+            </div></div>
+            <div class="trip overlay" style="background-image: url('https://pixabay.com/get/54e0d44a495bb10ff3d8992cc62f357f123fdef852547841762f79d69f49_640.jpg');background-repeat:no-repeat;background-attachment:center;background-position:center;background-size:cover;"><div class="trip-wrap">
+                <div class="country">Germany</div>
+                <div class="name">Berlin</div>
+                <div class="latlong">52.52437, 13.41053</div>
+                <div class="days">Days left: 8</div>
+                <div class="trip-date">Departure: 2020-09-01</div>
+                <div class="trip-temp">Temperature: 18&deg;C</div>
+                <div class="trip-description">Weather: Overcast clouds</div>
+            </div></div>
+            <div class="trip overlay" style="background-image: url('https://pixabay.com/get/54e0d44a495bb10ff3d8992cc62f357f123fdef852547841762f79d69f49_640.jpg');background-repeat:no-repeat;background-attachment:center;background-position:center;background-size:cover;"><div class="trip-wrap">
+                <div class="country">Germany</div>
+                <div class="name">Berlin</div>
+                <div class="latlong">52.52437, 13.41053</div>
+                <div class="days">Days left: 8</div>
+                <div class="trip-date">Departure: 2020-09-01</div>
+                <div class="trip-temp">Temperature: 18&deg;C</div>
+                <div class="trip-description">Weather: Overcast clouds</div>
+            </div></div>
         </section>
         <footer>
             <div class="footer-wrap">

@@ -67,7 +67,8 @@ app.post('/geonames-api', function addGeoData(req, res) {
         trip_temp: '',
         current_description: '',
         trip_description: '',
-        img: ''
+        img: '',
+        img_large: ''
     }
     projectData.push(tripData);
     res.send(projectData);
@@ -106,6 +107,7 @@ app.get('/pixabay-api', async (req, res) => {
     const json = await response.json()
     res.json(json)
     projectData[projectData.length-1].img = json.hits[0].webformatURL
+    projectData[projectData.length-1].img_large = json.hits[1].largeImageURL
 })
 
 app.get('/data/:dates', async (req, res) => {
