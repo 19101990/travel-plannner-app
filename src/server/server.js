@@ -12,7 +12,7 @@ const pixabay_key = '1721700-cd926526c6558979386283230'
 const app = express()
 
 // SET PORT FOR THE APP
-const port = 8000;
+// const port = 8000;
 
 // STORE TRIPS ENTERED BY THE USER
 let projectData = []
@@ -39,19 +39,15 @@ app.get('/', function (req, res) {
     res.sendFile('dist/index.html')
 })
  
-// CREATE ENDPOINT TO ADD A TRIP TO TRIPS ARRAY
-app.post('/trip', (req, res) => {
-    const trip = req.body
-    // console.log the trip to avoid bugs
-    console.log(trip)
-    trips.push(trip)
-    res.send('Your trip has been successfully added to the database')
+
+app.get('/test', (req, res) => {
+    res.json({message: 'WORKS'})
 })
 
 
-app.listen(port, function () {
-    console.log(`Travel Planner app listening on port ${port}!`)
-})
+// app.listen(port, function () {
+//     console.log(`Travel Planner app listening on port ${port}!`)
+// })
 
 // CREATE ENDPOINT FOR GEONAMES
 app.post('/geonames-api', function addGeoData(req, res) {
@@ -68,7 +64,8 @@ app.post('/geonames-api', function addGeoData(req, res) {
         current_description: '',
         trip_description: '',
         img: '',
-        img_large: ''
+        img_large: '',
+        flag: ''
     }
     projectData.push(tripData);
     res.send(projectData);
@@ -110,6 +107,17 @@ app.get('/pixabay-api', async (req, res) => {
     projectData[projectData.length-1].img_large = json.hits[1].largeImageURL
 })
 
+app.get('/rest-countries', async (req, res) => {
+    const name = projectData[projectData.length-1].country
+    const api_url = `https://restcountries.eu/rest/v2/name/${name}`
+    const response = await fetch(api_url)
+    const json = await response.json()
+    res.json(json)
+    console.log(json)
+    projectData[projectData.length-1].flag = json[0].flag
+    console.log(json[0].flag)
+})
+
 app.get('/data/:dates', async (req, res) => {
     const dates = req.params.dates.split(',')
     const startDate = dates[0]
@@ -123,3 +131,5 @@ app.get('/data/:dates', async (req, res) => {
     console.log(projectData)
     res.send(projectData)
 })
+
+module.exports = app

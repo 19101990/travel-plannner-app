@@ -12,7 +12,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 10em 0;
+    margin: 5em 0;
 }
 
 .trip-wrap {
@@ -34,7 +34,7 @@ body {
     border: 1px solid rgb(211, 211, 211);
 }
 
-.country, .name, .latlong, .days, .trip-date, .trip-temp, .trip-description {
+.country, .name, .latlong, .days, .trip-date, .trip-temp, .trip-description, .flag {
     position: relative;
     z-index: 100;
     width: 50%;

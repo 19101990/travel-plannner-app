@@ -25,6 +25,9 @@ export function handleSubmit(event) {
                 })
             })
             .then(async function (){
+                await fetch('http://localhost:8000/rest-countries')
+            })
+            .then(async function (){
                 await fetch('http://localhost:8000/weatherbit-api')
             })
             .then(async function (){
@@ -38,12 +41,12 @@ export function handleSubmit(event) {
             })
             .then(async function (){
                 // update interface
-                console.log("this is the other function: ", tripData)
                 const container = document.getElementById('trips')
                 container.insertAdjacentHTML('afterbegin', 
                 `<div class="trip overlay" style="background-image: url('${tripData[tripData.length-1].img_large}');background-repeat:no-repeat;background-attachment:center;background-position:center;background-size:cover;">
                     <div class="trip-wrap"><div class="country">${tripData[tripData.length-1].country}</div>
                     <div class="name">${tripData[tripData.length-1].name}</div>
+                    <div class="flag"><img src="${tripData[tripData.length-1].flag}" style="width: 30px; height: auto; margin-bottom: 1em;"></div>
                     <div class="latlong">${tripData[tripData.length-1].lat}, ${tripData[tripData.length-1].long}</div>
                    
                     <div class="days">Days left: ${tripData[tripData.length-1].days}</div>
