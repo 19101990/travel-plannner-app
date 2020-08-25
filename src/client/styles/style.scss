@@ -158,7 +158,7 @@ form#form {
     min-width: 250px
 }
 
-input[type="submit"] {
+#submit {
     border: none;
     background: rgb(78, 199, 255);
     color: #fff;
@@ -166,7 +166,7 @@ input[type="submit"] {
     margin: .5em
 }
 
-input[type="submit"]:hover {
+#submit:hover {
     background: rgb(15, 178, 253);
 }
 

@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Plan your next journey!</title>
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Knewave&family=Lobster&family=Share&display=swap" rel="stylesheet">
     </head>
@@ -13,7 +14,9 @@
                     <input id="input-city" type="text" name="input" value="" placeholder="Enter your destination...">
                     <input id="input-start-date" type="text" name="inputStart" value="" placeholder="YYYY-MM-DD">
                     <!-- <input id="input-end-date" type="text" name="inputEnd" value="" placeholder="YYYY-MM-DD"> -->
-                    <input type="submit" name="" value="Show results" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
+                    <!-- <input  type="submit" name="" value="Show results"> -->
+                    <button id="submit" class="btn" type="button">Send</button>
+                    <!-- <input id="submit" type="submit" name="" value="Show results" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)"> -->
                 </form>
             </div>
         </section>
@@ -25,7 +28,7 @@
                 <div><a href="https://github.com/19101990/travel-planner-app">GitHub</a></div>
             </div>
         </footer>
-        <script>
+        <!-- <script>
             // Check that service workers are supported
             if ('serviceWorker' in navigator) {
                 // Use the window load event to keep the page load performant
@@ -33,6 +36,6 @@
                     navigator.serviceWorker.register('/service-worker.js');
                 });
             }
-        </script>
+        </script> -->
     </body>
 </html>
