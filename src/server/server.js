@@ -35,9 +35,9 @@ console.log(__dirname)
 // res.send('Hello world') > sends message to the endpoint
 // res.sendFile('file_name') > sends file to the endpoint
 
-app.get('/', function (req, res) {
-    res.sendFile('dist/index.html')
-})
+// app.get('/', function (req, res) {
+//     res.sendFile('dist/index.html')
+// })
  
 
 app.get('/test', (req, res) => {
@@ -98,7 +98,7 @@ app.get('/weatherbit-api', async (req, res) => {
 
 app.get('/pixabay-api', async (req, res) => {
     const name = projectData[projectData.length-1].name
-    const api_url = `https://pixabay.com/api/?key=${pixabay_key}&q=${name}&image_type=photo`
+    const api_url = `https://pixabay.com/api/?key=${pixabay_key}&q=${name}&category=places&image_type=photo`
     const response = await fetch(api_url)
     const json = await response.json()
     res.json(json)
