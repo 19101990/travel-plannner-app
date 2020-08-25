@@ -51,8 +51,8 @@ export function handleSubmit(event) {
                    
                     <div class="days">Days left: ${tripData[tripData.length-1].days}</div>
                     <div class="trip-date">Departure: ${tripData[tripData.length-1].trip_date}</div>
-                    <div class="trip-temp">${tripData[tripData.length-1].trip_temp}&deg;C</div>
-                    <div class="trip-description">${tripData[tripData.length-1].trip_description}</div>
+                    <div class="trip-temp">Temperature: ${tripData[tripData.length-1].trip_temp}&deg;C</div>
+                    <div class="trip-description">Weather: ${tripData[tripData.length-1].trip_description}</div>
                 </div></div>`)
                 //  <div class="image"><img src=${tripData[tripData.length-1].img}></div>
                 
